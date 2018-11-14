@@ -1,5 +1,5 @@
-build/default/production/src/main.o:  \
-src/main.c  \
+build/default/production/src/taskHeartbeat.o:  \
+src/taskHeartbeat.c  \
  FreeRTOS/Source/FreeRTOS.h  \
 src/FreeRTOSConfig.h  \
  src/../mcc_generated_files/clock.h  \

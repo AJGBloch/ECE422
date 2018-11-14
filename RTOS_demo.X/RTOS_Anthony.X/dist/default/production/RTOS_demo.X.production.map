@@ -33,6 +33,7 @@ Command:
   build/default/production/src/taskBlinky.o \
   build/default/production/src/rtos_hooks.o \
   build/default/production/src/main.o \
+  build/default/production/src/taskHeartbeat.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ256GA702.gld.00 \
@@ -104,9 +105,9 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x1b4           0x28e  (654)
 .const                       0x2b4                0x4c            0x72  (114)
-.text                        0x300              0x2786          0x3b49  (15177)
-.dinit                      0x2a86                0x48            0x6c  (108)
-.text                       0x2ace               0x104           0x186  (390)
+.text                        0x300              0x2778          0x3b34  (15156)
+.dinit                      0x2a78                0x48            0x6c  (108)
+.text                       0x2ac0               0x112           0x19b  (411)
 
                  Total "program" memory used (bytes):         0x403b  (16443) 6%
 
@@ -256,16 +257,18 @@ External Symbols in Program Memory (by address):
                   0x0029a8                  _vPortFree
                   0x0029b0                  _vPortInitialiseBlocks
                   0x0029b8                  _xPortGetFreeHeapSize
-                  0x0029c4                  _main
-                  0x0029d2                  build/default/production/src/main.o:_prvMainCoRoutine
-                  0x002a32                  _vPortYield
-                  0x002ae4                  _taskBlinky_init
-                  0x002aee                  build/default/production/src/taskBlinky.o:_vBlinkyTask
-                  0x002b14                  _CLOCK_Initialize
-                  0x002b4c                  _vApplicationIdleHook
-                  0x002b54                  _vApplicationStackOverflowHook
-                  0x002b6a                  _vApplicationMallocFailedHook
-                  0x002b7c                  _PIN_MANAGER_Initialize
+                  0x0029c4                  _prvMainCoRoutine
+                  0x0029f2                  _taskHeartbeat_Init
+                  0x002a02                  _taskHeartbeat_Execute
+                  0x002a24                  _vPortYield
+                  0x002ad6                  _taskBlinky_init
+                  0x002ae0                  build/default/production/src/taskBlinky.o:_vBlinkyTask
+                  0x002b06                  _CLOCK_Initialize
+                  0x002b3e                  _vApplicationIdleHook
+                  0x002b46                  _vApplicationStackOverflowHook
+                  0x002b5c                  _vApplicationMallocFailedHook
+                  0x002b6e                  _PIN_MANAGER_Initialize
+                  0x002baa                  _main
                   0x002bb8                  _SYSTEM_Initialize
                   0x002bc4                  _OSCILLATOR_Initialize
                   0x002bcc                  _INTERRUPT_Initialize
@@ -273,10 +276,10 @@ External Symbols in Program Memory (by address):
 
 External Symbols in Program Memory (by name):
 
-                  0x002b14                  _CLOCK_Initialize
+                  0x002b06                  _CLOCK_Initialize
                   0x002bcc                  _INTERRUPT_Initialize
                   0x002bc4                  _OSCILLATOR_Initialize
-                  0x002b7c                  _PIN_MANAGER_Initialize
+                  0x002b6e                  _PIN_MANAGER_Initialize
                   0x002bb8                  _SYSTEM_Initialize
                   0x00025e                  __AddressError
                   0x000276                  __DefaultInterrupt
@@ -291,17 +294,20 @@ External Symbols in Program Memory (by name):
                   0x00013c                  __psv_init
                   0x000100                  __resetPRI
                   0x0004fa                  _eTaskGetState
-                  0x0029c4                  _main
+                  0x002baa                  _main
                   0x00027c                  _memcmp
                   0x000298                  _memcpy
                   0x0002a6                  _memset
                   0x0007aa                  _pcTaskGetName
                   0x001fa2                  _pcTimerGetName
+                  0x0029c4                  _prvMainCoRoutine
                   0x002946                  _pvPortMalloc
                   0x000e86                  _pvTaskIncrementMutexHeldCount
                   0x002350                  _pvTimerGetTimerID
                   0x002818                  _pxPortInitialiseStack
-                  0x002ae4                  _taskBlinky_init
+                  0x002ad6                  _taskBlinky_init
+                  0x002a02                  _taskHeartbeat_Execute
+                  0x0029f2                  _taskHeartbeat_Init
                   0x000e9c                  _ulTaskNotifyTake
                   0x0027d0                  _uxListRemove
                   0x00185c                  _uxQueueMessagesWaiting
@@ -311,9 +317,9 @@ External Symbols in Program Memory (by name):
                   0x00053a                  _uxTaskPriorityGet
                   0x00055c                  _uxTaskPriorityGetFromISR
                   0x000e62                  _uxTaskResetEventItemValue
-                  0x002b4c                  _vApplicationIdleHook
-                  0x002b6a                  _vApplicationMallocFailedHook
-                  0x002b54                  _vApplicationStackOverflowHook
+                  0x002b3e                  _vApplicationIdleHook
+                  0x002b5c                  _vApplicationMallocFailedHook
+                  0x002b46                  _vApplicationStackOverflowHook
                   0x002488                  _vCoRoutineAddToDelayedList
                   0x002606                  _vCoRoutineSchedule
                   0x0026de                  _vListInitialise
@@ -325,7 +331,7 @@ External Symbols in Program Memory (by name):
                   0x00292a                  _vPortExitCritical
                   0x0029a8                  _vPortFree
                   0x0029b0                  _vPortInitialiseBlocks
-                  0x002a32                  _vPortYield
+                  0x002a24                  _vPortYield
                   0x00189e                  _vQueueDelete
                   0x001d12                  _vQueueWaitForMessageRestricted
                   0x0004c8                  _vTaskDelay
@@ -395,8 +401,7 @@ External Symbols in Program Memory (by name):
                   0x002380                  _xTimerPendFunctionCallFromISR
                   0x000cae                  build/default/production/FreeRTOS/Source/tasks.o:_prvIdleTask
                   0x00200c                  build/default/production/FreeRTOS/Source/timers.o:_prvTimerTask
-                  0x0029d2                  build/default/production/src/main.o:_prvMainCoRoutine
-                  0x002aee                  build/default/production/src/taskBlinky.o:_vBlinkyTask
+                  0x002ae0                  build/default/production/src/taskBlinky.o:_vBlinkyTask
 
 Memory Configuration
 
@@ -435,6 +440,7 @@ LOAD build/default/production/mcc_generated_files/pin_manager.o
 LOAD build/default/production/src/taskBlinky.o
 LOAD build/default/production/src/rtos_hooks.o
 LOAD build/default/production/src/main.o
+LOAD build/default/production/src/taskHeartbeat.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libfx-elf.a
@@ -532,28 +538,29 @@ __FDEVOPT1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x7ab4
+.debug_info       0x000000       0x7c41
  *(.debug_info)
- .debug_info      0x000000        0x946 build/default/production/FreeRTOS/Source/croutine.o
- .debug_info      0x000946        0x45d build/default/production/FreeRTOS/Source/list.o
- .debug_info      0x000da3        0xc8a build/default/production/FreeRTOS/Source/port.o
- .debug_info      0x001a2d       0x15a7 build/default/production/FreeRTOS/Source/queue.o
- .debug_info      0x002fd4       0x1ce8 build/default/production/FreeRTOS/Source/tasks.o
- .debug_info      0x004cbc        0xfab build/default/production/FreeRTOS/Source/timers.o
- .debug_info      0x005c67         0xb7 build/default/production/FreeRTOS/Source/portasm_PIC24.o
- .debug_info      0x005d1e        0x2fd build/default/production/FreeRTOS/Source/heap_1.o
- .debug_info      0x00601b        0x165 build/default/production/mcc_generated_files/system.o
- .debug_info      0x006180        0x438 build/default/production/mcc_generated_files/traps.o
- .debug_info      0x0065b8        0x2a9 build/default/production/mcc_generated_files/clock.o
- .debug_info      0x006861        0x173 build/default/production/mcc_generated_files/interrupt_manager.o
- .debug_info      0x0069d4        0x166 build/default/production/mcc_generated_files/mcc.o
- .debug_info      0x006b3a        0x300 build/default/production/mcc_generated_files/pin_manager.o
- .debug_info      0x006e3a        0x3a3 build/default/production/src/taskBlinky.o
- .debug_info      0x0071dd        0x34e build/default/production/src/rtos_hooks.o
- .debug_info      0x00752b        0x589 build/default/production/src/main.o
+ .debug_info      0x000000        0x948 build/default/production/FreeRTOS/Source/croutine.o
+ .debug_info      0x000948        0x45f build/default/production/FreeRTOS/Source/list.o
+ .debug_info      0x000da7        0xc8c build/default/production/FreeRTOS/Source/port.o
+ .debug_info      0x001a33       0x15a9 build/default/production/FreeRTOS/Source/queue.o
+ .debug_info      0x002fdc       0x1cea build/default/production/FreeRTOS/Source/tasks.o
+ .debug_info      0x004cc6        0xfad build/default/production/FreeRTOS/Source/timers.o
+ .debug_info      0x005c73         0xb9 build/default/production/FreeRTOS/Source/portasm_PIC24.o
+ .debug_info      0x005d2c        0x2ff build/default/production/FreeRTOS/Source/heap_1.o
+ .debug_info      0x00602b        0x167 build/default/production/mcc_generated_files/system.o
+ .debug_info      0x006192        0x43a build/default/production/mcc_generated_files/traps.o
+ .debug_info      0x0065cc        0x2ab build/default/production/mcc_generated_files/clock.o
+ .debug_info      0x006877        0x175 build/default/production/mcc_generated_files/interrupt_manager.o
+ .debug_info      0x0069ec        0x168 build/default/production/mcc_generated_files/mcc.o
+ .debug_info      0x006b54        0x302 build/default/production/mcc_generated_files/pin_manager.o
+ .debug_info      0x006e56        0x3a5 build/default/production/src/taskBlinky.o
+ .debug_info      0x0071fb        0x350 build/default/production/src/rtos_hooks.o
+ .debug_info      0x00754b        0x177 build/default/production/src/main.o
+ .debug_info      0x0076c2        0x57f build/default/production/src/taskHeartbeat.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0xffc
+.debug_abbrev     0x000000       0x101f
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x207 build/default/production/FreeRTOS/Source/croutine.o
  .debug_abbrev    0x000207         0xda build/default/production/FreeRTOS/Source/list.o
@@ -571,9 +578,10 @@ __FDEVOPT1
  .debug_abbrev    0x000d10         0x59 build/default/production/mcc_generated_files/pin_manager.o
  .debug_abbrev    0x000d69         0xb5 build/default/production/src/taskBlinky.o
  .debug_abbrev    0x000e1e         0xdd build/default/production/src/rtos_hooks.o
- .debug_abbrev    0x000efb        0x101 build/default/production/src/main.o
+ .debug_abbrev    0x000efb         0x36 build/default/production/src/main.o
+ .debug_abbrev    0x000f31         0xee build/default/production/src/taskHeartbeat.o
 
-.debug_line       0x000000       0x168f
+.debug_line       0x000000       0x16cc
  *(.debug_line)
  .debug_line      0x000000        0x19c build/default/production/FreeRTOS/Source/croutine.o
  .debug_line      0x00019c         0xe2 build/default/production/FreeRTOS/Source/list.o
@@ -591,9 +599,10 @@ __FDEVOPT1
  .debug_line      0x001216        0x10e build/default/production/mcc_generated_files/pin_manager.o
  .debug_line      0x001324        0x116 build/default/production/src/taskBlinky.o
  .debug_line      0x00143a        0x11a build/default/production/src/rtos_hooks.o
- .debug_line      0x001554        0x13b build/default/production/src/main.o
+ .debug_line      0x001554         0x40 build/default/production/src/main.o
+ .debug_line      0x001594        0x138 build/default/production/src/taskHeartbeat.o
 
-.debug_frame      0x000000       0x1142
+.debug_frame      0x000000       0x1156
  *(.debug_frame)
  .debug_frame     0x000000         0xd8 build/default/production/FreeRTOS/Source/croutine.o
  .debug_frame     0x0000d8         0xa0 build/default/production/FreeRTOS/Source/list.o
@@ -610,7 +619,8 @@ __FDEVOPT1
  .debug_frame     0x000fbe         0x30 build/default/production/mcc_generated_files/pin_manager.o
  .debug_frame     0x000fee         0x68 build/default/production/src/taskBlinky.o
  .debug_frame     0x001056         0x68 build/default/production/src/rtos_hooks.o
- .debug_frame     0x0010be         0x84 build/default/production/src/main.o
+ .debug_frame     0x0010be         0x30 build/default/production/src/main.o
+ .debug_frame     0x0010ee         0x68 build/default/production/src/taskHeartbeat.o
 
 .debug_str        0x000000        0x4e7
  *(.debug_str)
@@ -623,7 +633,7 @@ __FDEVOPT1
  .debug_str       0x0004a1         0x18 build/default/production/mcc_generated_files/traps.o
  .debug_str       0x0004b9         0x1c build/default/production/mcc_generated_files/clock.o
  .debug_str       0x0004d5          0x9 build/default/production/src/taskBlinky.o
- .debug_str       0x0004de          0x9 build/default/production/src/main.o
+ .debug_str       0x0004de          0x9 build/default/production/src/taskHeartbeat.o
 
 .debug_loc
  *(.debug_loc)
@@ -632,7 +642,7 @@ __FDEVOPT1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0xbea
+                  0x000000        0xc42
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x96 build/default/production/FreeRTOS/Source/croutine.o
@@ -666,11 +676,13 @@ __FDEVOPT1
                   0x000b61         0x6e build/default/production/src/rtos_hooks.o
  .debug_pubnames
                   0x000bcf         0x1b build/default/production/src/main.o
+ .debug_pubnames
+                  0x000bea         0x58 build/default/production/src/taskHeartbeat.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000        0x198
+.debug_aranges    0x000000        0x1b0
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/production/FreeRTOS/Source/croutine.o
@@ -706,6 +718,8 @@ __FDEVOPT1
                   0x000168         0x18 build/default/production/src/rtos_hooks.o
  .debug_aranges
                   0x000180         0x18 build/default/production/src/main.o
+ .debug_aranges
+                  0x000198         0x18 build/default/production/src/taskHeartbeat.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2046,84 +2060,88 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000198        0xa7a
+                  0x0001b0        0xa8c
  .debug_pubtypes
-                  0x000198        0x120 build/default/production/FreeRTOS/Source/croutine.o
+                  0x0001b0        0x120 build/default/production/FreeRTOS/Source/croutine.o
  .debug_pubtypes
-                  0x0002b8         0x98 build/default/production/FreeRTOS/Source/list.o
+                  0x0002d0         0x98 build/default/production/FreeRTOS/Source/list.o
  .debug_pubtypes
-                  0x000350        0x10c build/default/production/FreeRTOS/Source/port.o
+                  0x000368        0x10c build/default/production/FreeRTOS/Source/port.o
  .debug_pubtypes
-                  0x00045c        0x183 build/default/production/FreeRTOS/Source/queue.o
+                  0x000474        0x183 build/default/production/FreeRTOS/Source/queue.o
  .debug_pubtypes
-                  0x0005df        0x1be build/default/production/FreeRTOS/Source/tasks.o
+                  0x0005f7        0x1be build/default/production/FreeRTOS/Source/tasks.o
  .debug_pubtypes
-                  0x00079d        0x1d4 build/default/production/FreeRTOS/Source/timers.o
+                  0x0007b5        0x1d4 build/default/production/FreeRTOS/Source/timers.o
  .debug_pubtypes
-                  0x000971         0x41 build/default/production/FreeRTOS/Source/heap_1.o
+                  0x000989         0x41 build/default/production/FreeRTOS/Source/heap_1.o
  .debug_pubtypes
-                  0x0009b2         0x12 build/default/production/mcc_generated_files/system.o
+                  0x0009ca         0x12 build/default/production/mcc_generated_files/system.o
  .debug_pubtypes
-                  0x0009c4         0x71 build/default/production/mcc_generated_files/traps.o
+                  0x0009dc         0x71 build/default/production/mcc_generated_files/traps.o
  .debug_pubtypes
-                  0x000a35         0x2b build/default/production/mcc_generated_files/clock.o
+                  0x000a4d         0x2b build/default/production/mcc_generated_files/clock.o
  .debug_pubtypes
-                  0x000a60         0x12 build/default/production/mcc_generated_files/interrupt_manager.o
+                  0x000a78         0x12 build/default/production/mcc_generated_files/interrupt_manager.o
  .debug_pubtypes
-                  0x000a72         0x12 build/default/production/mcc_generated_files/mcc.o
+                  0x000a8a         0x12 build/default/production/mcc_generated_files/mcc.o
  .debug_pubtypes
-                  0x000a84         0x1f build/default/production/mcc_generated_files/pin_manager.o
+                  0x000a9c         0x1f build/default/production/mcc_generated_files/pin_manager.o
  .debug_pubtypes
-                  0x000aa3         0x4d build/default/production/src/taskBlinky.o
+                  0x000abb         0x4d build/default/production/src/taskBlinky.o
  .debug_pubtypes
-                  0x000af0         0x49 build/default/production/src/rtos_hooks.o
+                  0x000b08         0x49 build/default/production/src/rtos_hooks.o
  .debug_pubtypes
-                  0x000b39         0xd9 build/default/production/src/main.o
+                  0x000b51         0x12 build/default/production/src/main.o
+ .debug_pubtypes
+                  0x000b63         0xd9 build/default/production/src/taskHeartbeat.o
 
 __c30_signature
-                  0x000c12         0x7e
+                  0x000c3c         0x84
  __c30_signature
-                  0x000c12          0x6 build/default/production/FreeRTOS/Source/croutine.o
+                  0x000c3c          0x6 build/default/production/FreeRTOS/Source/croutine.o
  __c30_signature
-                  0x000c18          0x6 build/default/production/FreeRTOS/Source/list.o
+                  0x000c42          0x6 build/default/production/FreeRTOS/Source/list.o
  __c30_signature
-                  0x000c1e          0x6 build/default/production/FreeRTOS/Source/port.o
+                  0x000c48          0x6 build/default/production/FreeRTOS/Source/port.o
  __c30_signature
-                  0x000c24          0x6 build/default/production/FreeRTOS/Source/queue.o
+                  0x000c4e          0x6 build/default/production/FreeRTOS/Source/queue.o
  __c30_signature
-                  0x000c2a          0x6 build/default/production/FreeRTOS/Source/tasks.o
+                  0x000c54          0x6 build/default/production/FreeRTOS/Source/tasks.o
  __c30_signature
-                  0x000c30          0x6 build/default/production/FreeRTOS/Source/timers.o
+                  0x000c5a          0x6 build/default/production/FreeRTOS/Source/timers.o
  __c30_signature
-                  0x000c36          0x6 build/default/production/FreeRTOS/Source/heap_1.o
+                  0x000c60          0x6 build/default/production/FreeRTOS/Source/heap_1.o
  __c30_signature
-                  0x000c3c          0x6 build/default/production/mcc_generated_files/system.o
+                  0x000c66          0x6 build/default/production/mcc_generated_files/system.o
  __c30_signature
-                  0x000c42          0x6 build/default/production/mcc_generated_files/traps.o
+                  0x000c6c          0x6 build/default/production/mcc_generated_files/traps.o
  __c30_signature
-                  0x000c48          0x6 build/default/production/mcc_generated_files/clock.o
+                  0x000c72          0x6 build/default/production/mcc_generated_files/clock.o
  __c30_signature
-                  0x000c4e          0x6 build/default/production/mcc_generated_files/interrupt_manager.o
+                  0x000c78          0x6 build/default/production/mcc_generated_files/interrupt_manager.o
  __c30_signature
-                  0x000c54          0x6 build/default/production/mcc_generated_files/mcc.o
+                  0x000c7e          0x6 build/default/production/mcc_generated_files/mcc.o
  __c30_signature
-                  0x000c5a          0x6 build/default/production/mcc_generated_files/pin_manager.o
+                  0x000c84          0x6 build/default/production/mcc_generated_files/pin_manager.o
  __c30_signature
-                  0x000c60          0x6 build/default/production/src/taskBlinky.o
+                  0x000c8a          0x6 build/default/production/src/taskBlinky.o
  __c30_signature
-                  0x000c66          0x6 build/default/production/src/rtos_hooks.o
+                  0x000c90          0x6 build/default/production/src/rtos_hooks.o
  __c30_signature
-                  0x000c6c          0x6 build/default/production/src/main.o
+                  0x000c96          0x6 build/default/production/src/main.o
  __c30_signature
-                  0x000c72          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x000c9c          0x6 build/default/production/src/taskHeartbeat.o
  __c30_signature
-                  0x000c78          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x000ca2          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x000c7e          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a(memcmp.DA_eo)
+                  0x000ca8          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x000c84          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a(memcpy.DA_eo)
+                  0x000cae          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a(memcmp.DA_eo)
  __c30_signature
-                  0x000c8a          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a(memset.DA_eo)
+                  0x000cb4          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a(memcpy.DA_eo)
+ __c30_signature
+                  0x000cba          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a(memset.DA_eo)
 
 .nbss               0x0800         0x44
  .nbss              0x0800         0x20 build/default/production/FreeRTOS/Source/tasks.o
@@ -2206,7 +2224,7 @@ __c30_signature
  .const             0x82ee          0xa build/default/production/src/taskBlinky.o
  .const             0x82f8          0x8 build/default/production/FreeRTOS/Source/timers.o
 
-.text             0x000300       0x2786
+.text             0x000300       0x2778
  .text            0x000300        0xfea build/default/production/FreeRTOS/Source/tasks.o
                   0x000300                  _xTaskCreate
                   0x0004c8                  _vTaskDelay
@@ -2311,29 +2329,32 @@ __c30_signature
                   0x0029a8                  _vPortFree
                   0x0029b0                  _vPortInitialiseBlocks
                   0x0029b8                  _xPortGetFreeHeapSize
- .text            0x0029c4         0x6e build/default/production/src/main.o
-                  0x0029c4                  _main
-                  0x0029d2                  build/default/production/src/main.o:_prvMainCoRoutine
- .text            0x002a32         0x54 build/default/production/FreeRTOS/Source/portasm_PIC24.o
-                  0x002a32                  _vPortYield
+ .text            0x0029c4         0x60 build/default/production/src/taskHeartbeat.o
+                  0x0029c4                  _prvMainCoRoutine
+                  0x0029f2                  _taskHeartbeat_Init
+                  0x002a02                  _taskHeartbeat_Execute
+ .text            0x002a24         0x54 build/default/production/FreeRTOS/Source/portasm_PIC24.o
+                  0x002a24                  _vPortYield
 
-.dinit            0x002a86         0x48
- .dinit           0x002a86         0x48 data_init
+.dinit            0x002a78         0x48
+ .dinit           0x002a78         0x48 data_init
 
-.text             0x002ace        0x104
- .text            0x002ace         0x46 build/default/production/src/taskBlinky.o
-                  0x002ae4                  _taskBlinky_init
-                  0x002aee                  build/default/production/src/taskBlinky.o:_vBlinkyTask
- .text            0x002b14         0x38 build/default/production/mcc_generated_files/clock.o
-                  0x002b14                  _CLOCK_Initialize
- .text            0x002b4c         0x30 build/default/production/src/rtos_hooks.o
-                  0x002b4c                  _vApplicationIdleHook
-                  0x002b54                  _vApplicationStackOverflowHook
-                  0x002b6a                  _vApplicationMallocFailedHook
- .text            0x002b7c         0x26 build/default/production/mcc_generated_files/pin_manager.o
-                  0x002b7c                  _PIN_MANAGER_Initialize
- .text            0x002ba2         0x16 build/default/production/mcc_generated_files/traps.o
-                  0x002ba2                  _TRAPS_halt_on_error
+.text             0x002ac0        0x112
+ .text            0x002ac0         0x46 build/default/production/src/taskBlinky.o
+                  0x002ad6                  _taskBlinky_init
+                  0x002ae0                  build/default/production/src/taskBlinky.o:_vBlinkyTask
+ .text            0x002b06         0x38 build/default/production/mcc_generated_files/clock.o
+                  0x002b06                  _CLOCK_Initialize
+ .text            0x002b3e         0x30 build/default/production/src/rtos_hooks.o
+                  0x002b3e                  _vApplicationIdleHook
+                  0x002b46                  _vApplicationStackOverflowHook
+                  0x002b5c                  _vApplicationMallocFailedHook
+ .text            0x002b6e         0x26 build/default/production/mcc_generated_files/pin_manager.o
+                  0x002b6e                  _PIN_MANAGER_Initialize
+ .text            0x002b94         0x16 build/default/production/mcc_generated_files/traps.o
+                  0x002b94                  _TRAPS_halt_on_error
+ .text            0x002baa          0xe build/default/production/src/main.o
+                  0x002baa                  _main
  .text            0x002bb8          0xc build/default/production/mcc_generated_files/system.o
                   0x002bb8                  _SYSTEM_Initialize
  .text            0x002bc4          0x8 build/default/production/mcc_generated_files/mcc.o

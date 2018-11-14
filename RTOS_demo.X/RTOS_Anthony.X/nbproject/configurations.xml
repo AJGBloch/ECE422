@@ -34,7 +34,7 @@
       <logicalFolder name="f2" displayName="tasks" projectFiles="true">
         <itemPath>src/taskBlinky.h</itemPath>
         <itemPath>src/app.h</itemPath>
-        <itemPath>src/new_file.h</itemPath>
+        <itemPath>src/taskHeartbeat.h</itemPath>
       </logicalFolder>
       <itemPath>src/FreeRTOSConfig.h</itemPath>
     </logicalFolder>
@@ -67,7 +67,7 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="tasks" projectFiles="true">
         <itemPath>src/taskBlinky.c</itemPath>
-        <itemPath>src/new_file.c</itemPath>
+        <itemPath>src/taskHeartbeat.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>src/rtos_hooks.c</itemPath>
@@ -270,6 +270,7 @@
         <property key="OUTPUT COMPARE 1" value="true"/>
         <property key="OUTPUT COMPARE 2" value="true"/>
         <property key="OUTPUT COMPARE 3" value="true"/>
+        <property key="PMP" value="true"/>
         <property key="REFO" value="true"/>
         <property key="RTCC" value="true"/>
         <property key="SPI 1" value="true"/>
@@ -277,6 +278,8 @@
         <property key="SPI 3" value="true"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="TIMER 1" value="true"/>
+        <property key="TIMER 2" value="true"/>
+        <property key="TIMER 3" value="true"/>
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
@@ -297,7 +300,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-2aeff"/>
-        <property key="poweroptions.powerenable" value="true"/>
+        <property key="poweroptions.powerenable" value="false"/>
         <property key="programmertogo.imagename" value=""/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
