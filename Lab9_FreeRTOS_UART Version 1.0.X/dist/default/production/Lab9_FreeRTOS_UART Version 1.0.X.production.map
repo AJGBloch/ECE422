@@ -610,7 +610,7 @@ __FDEVOPT1
  .debug_abbrev    0x001088         0x90 build/default/production/src/led.o
  .debug_abbrev    0x001118        0x154 build/default/production/src/uart.o
 
-.debug_line       0x000000       0x1932
+.debug_line       0x000000       0x1933
  *(.debug_line)
  .debug_line      0x000000        0x19c build/default/production/FreeRTOS/Source/croutine.o
  .debug_line      0x00019c         0xe2 build/default/production/FreeRTOS/Source/list.o
@@ -628,10 +628,10 @@ __FDEVOPT1
  .debug_line      0x001216        0x10e build/default/production/mcc_generated_files/pin_manager.o
  .debug_line      0x001324        0x132 build/default/production/src/taskUART.o
  .debug_line      0x001456        0x11a build/default/production/src/rtos_hooks.o
- .debug_line      0x001570         0x3f build/default/production/src/main.o
- .debug_line      0x0015af        0x123 build/default/production/src/interrupt.o
- .debug_line      0x0016d2         0xf2 build/default/production/src/led.o
- .debug_line      0x0017c4        0x16e build/default/production/src/uart.o
+ .debug_line      0x001570         0x40 build/default/production/src/main.o
+ .debug_line      0x0015b0        0x123 build/default/production/src/interrupt.o
+ .debug_line      0x0016d3         0xf2 build/default/production/src/led.o
+ .debug_line      0x0017c5        0x16e build/default/production/src/uart.o
 
 .debug_frame      0x000000       0x1220
  *(.debug_frame)
