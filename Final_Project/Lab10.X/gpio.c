@@ -32,7 +32,7 @@
 void gpio_init(void)
 {
    TRISB &= 0x1FFF;              // RP3, 14, 15 are output
-   LATB = 0x4000;                    // initialize output to be off except for RP14
+   LATB = 0x0000;                    // initialize output to be off
 }
 
 
@@ -48,3 +48,28 @@ void turn_off(int LED)
     LATB &= (~(0x0001 << LED));
 }
 
+void toggle(int LED)
+{
+    if(((LATB >> LED)&0x0001) == 0) // check if LED is off
+    {
+        turn_on(LED);
+    }
+    else
+    {
+        turn_off(LED);
+    }
+}
+
+int status(int LED)
+{
+    int status;
+    if(((LATB >> LED)&0x0001) == 0) // check if LED is off
+    {
+        status = 0;
+    }
+    else
+    {
+        status = 1;
+    }
+    return status;
+}

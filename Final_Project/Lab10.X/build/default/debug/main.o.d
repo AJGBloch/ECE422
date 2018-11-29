@@ -1,7 +1,7 @@
-build/default/production/main.o:  \
+build/default/debug/main.o:  \
 main.c  \
 config.h  \
 gpio.h  \
 uart.h  \
 app.h  \
- timer.h 
+timer.h 

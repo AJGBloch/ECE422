@@ -31,6 +31,7 @@
 #include "gpio.h"
 #include "uart.h"
 #include "app.h"
+#include "timer.h"
 
 int main(void)
 {

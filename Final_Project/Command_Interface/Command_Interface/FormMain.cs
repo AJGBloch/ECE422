@@ -14,6 +14,9 @@ namespace CmdInterface
 
         private int new_ch = 0;
         private char ch_rx;
+        private char mode_rx;
+        private string str_rx;
+        private int count_rx;
         private char ch_tx;
 
         public FormMain()
@@ -115,6 +118,28 @@ namespace CmdInterface
             int temp;
             temp = serialPort1.ReadByte();
             ch_rx = (char)temp;
+            if(ch_rx == '<')
+            {
+                count_rx = 0;
+                str_rx = "";
+                temp = serialPort1.ReadByte();
+                ch_rx = (char)temp;
+                while (ch_rx != '>')
+                {
+                    if(count_rx == 0)
+                    {
+                        mode_rx = ch_rx;
+                    }
+                    else
+                    {
+                        str_rx += ch_rx.ToString();
+                    }
+                    count_rx++;
+                    temp = serialPort1.ReadByte();
+                    ch_rx = (char)temp;
+                }
+
+            }
             this.Invoke(new EventHandler(ShowText));
 
 
@@ -123,7 +148,26 @@ namespace CmdInterface
 
         private void ShowText(object sender, EventArgs e) // called after UART data received
         {
-            tbStatus.Text = ch_rx.ToString();
+            if(count_rx > 0)
+            {
+                if(mode_rx == 'e')
+                {
+                    if(count_rx > 1)
+                    {
+                        if(str_rx == "1")
+                        {
+                            tbStatus.Text = "ON";
+                        }
+                        else
+                        {
+                            tbStatus.Text = "OFF";
+                        }
+                    }
+                }
+            //tbStatus.Text = str_rx;
+            //tbStatus.AppendText(mode_rx.ToString());
+            //tbStatus.AppendText(str_rx);
+            }
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -198,12 +242,12 @@ namespace CmdInterface
 
         private void btnLedOff_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("b!");
+            _composer.GenericCmd("<b>");
         }
 
         private void btnLedOn_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("a!");
+            _composer.GenericCmd("<a>");
         }
 
         private void btnEnableTimed_Click(object sender, EventArgs e)
@@ -211,7 +255,7 @@ namespace CmdInterface
             int parsedValue;
             if (int.TryParse(textBoxTime1.Text, out parsedValue))
             {
-                _composer.GenericCmd("c" + textBoxTime1.Text + "!");
+                _composer.GenericCmd("<c" + textBoxTime1.Text + ">");
             }
             else
             {
@@ -222,7 +266,7 @@ namespace CmdInterface
 
         private void btnDisableTimed_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("d!");
+            _composer.GenericCmd("<d>");
         }
 
         private void btnEnablePeriodic_Click(object sender, EventArgs e)
@@ -230,7 +274,7 @@ namespace CmdInterface
             int parsedValue;
             if (int.TryParse(tbPeriodic.Text, out parsedValue))
             {
-                _composer.GenericCmd("f" + tbPeriodic.Text + "!");
+                _composer.GenericCmd("<f" + tbPeriodic.Text + ">");
             }
             else
             {
@@ -240,22 +284,22 @@ namespace CmdInterface
 
         private void btnDisabledPeriodic_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("g!");
+            _composer.GenericCmd("<g>");
         }
 
         private void btnReadInput_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("h!");
+            _composer.GenericCmd("<h>");
         }
 
         private void btnCh1_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("i!");
+            _composer.GenericCmd("<i>");
         }
 
         private void btnCh2_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("j!");
+            _composer.GenericCmd("<j>");
         }
 
         private void tbStatus_TextChanged(object sender, EventArgs e)
@@ -274,12 +318,12 @@ namespace CmdInterface
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("e!");
+            _composer.GenericCmd("<e>");
         }
 
         private void btnCh3_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("k!");
+            _composer.GenericCmd("<k>");
         }
     }
 }

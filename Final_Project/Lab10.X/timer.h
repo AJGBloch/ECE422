@@ -20,29 +20,34 @@
  */
 
 /* 
- * File: gpio.h   
+ * File: timer.h   
  * Author: Anthony Bloch
- * Comments: handles GPIO for LEDs on RP13, 14, 15
+ * Comments: handles timers for PIC24
  * Revision history: 
  */
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef GPIO_H
-#define	GPIO_H
+#ifndef TIMER_H
+#define	TIMER_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include <xc.h> // include processor files - each processor file is guarded.
 
-#define ON 1
-#define OFF 0
-#define LED_GREEN 13
-#define LED_YELLOW 14
-#define LED_RED 15
+#define ms_100 0x186C
+#define ms_500 0x7A1D
+#define ms_1000 0xF438
 
-void gpio_init(void);
-void turn_on(int LED);
-void turn_off(int LED);
-void toggle(int LED);
-int status(int LED);
-#endif	/* GPIO_H */
+#define UP 1
+#define DOWN 0
+
+extern int t1_flag;
+extern int t1_periods_1;
+extern int t1_periods_2;
+
+void timer_init(void);
+void __attribute__((__interrupt__, __shadow__)) _T1Interrupt(void);
+
+
+
+#endif	/* TIMER_H */
 

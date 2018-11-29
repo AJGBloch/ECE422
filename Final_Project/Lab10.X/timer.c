@@ -20,29 +20,45 @@
  */
 
 /* 
- * File: gpio.h   
+ * File: timer.c  
  * Author: Anthony Bloch
- * Comments: handles GPIO for LEDs on RP13, 14, 15
+ * Comments: handles timers for PIC24
  * Revision history: 
  */
 
-// This is a guard condition so that contents of this file are not included
-// more than once.  
-#ifndef GPIO_H
-#define	GPIO_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include "timer.h"
 
-#define ON 1
-#define OFF 0
-#define LED_GREEN 13
-#define LED_YELLOW 14
-#define LED_RED 15
+int t1_flag = UP;
+int t1_periods_1 = 0;
+int t1_periods_2 = 0;
 
-void gpio_init(void);
-void turn_on(int LED);
-void turn_off(int LED);
-void toggle(int LED);
-int status(int LED);
-#endif	/* GPIO_H */
+void timer_init(void)
+{
+T1CON = 0x00; //Stops the Timer1 and reset control reg.
+TMR1 = 0x00; //Clear contents of the timer register
+T1CONbits.TCKPS = 2; // pre-scaler 1:64
+PR1 = 1; //Load the Period register with the value 1
+IPC0bits.T1IP = 0x01; //Setup Timer1 interrupt for desired priority level
+IFS0bits.T1IF = 0; //Clear the Timer1 interrupt status flag
+IEC0bits.T1IE = 1; //Enable Timer1 interrupts
+T1CONbits.TON = 1; //Start Timer1
+}
 
+// timer interrupt handler
+void __attribute__((__interrupt__, __shadow__)) _T1Interrupt(void)
+{
+    // led_counter controls which led is on in main()
+    t1_flag = 1;
+    if(t1_periods_1 >= 2000000000)
+    {
+        t1_periods_1 = 0;
+    }
+    if(t1_periods_2 >= 2000000000)
+    {
+        t1_periods_2 = 0;
+    }
+    t1_periods_1++;
+    t1_periods_2++;
+    IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
+}

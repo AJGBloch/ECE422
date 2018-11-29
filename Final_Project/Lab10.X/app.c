@@ -25,20 +25,34 @@
  * Comments:
  * Revision history: 
  */
+#include <math.h>
 #include "app.h"
 #include "gpio.h"
 #include "uart.h"
+#include "timer.h"
 
 #define MAX_PROTOCOL_LENGTH 8
+#define PROTOCOL_BEGIN '<'
+#define PROTOCOL_END '>'
+#define ENABLED 1
+#define DISABLED 0
 
 char protocol[MAX_PROTOCOL_LENGTH];
 int protocol_length;
+int periodic_pulse_width = 1;
+int periodic_status = DISABLED;
+int led_red_status = OFF;
+int timed_status = DISABLED;
+int timed_duration = 1;
+int timed_count = 0;
+int led_yellow_status = OFF;
 
 void receive_protocol(void)
 {
-    protocol_length = 0;
+    ch_new = 0;
     while(ch_new == 0); // wait for first character of protocol
-    while(ch_rx != '!') // get protocol characters until end of string ('!') is indicated
+    protocol_length = 0;
+    while(ch_rx != PROTOCOL_END) // get protocol characters until end of string ('!') is indicated
     {
         if(protocol_length < MAX_PROTOCOL_LENGTH) // save only the first MAX_PROTOCOL_LENGTH characters of protocol
         {
@@ -53,6 +67,7 @@ void receive_protocol(void)
 
 void process_protocol(void)
 {
+    int i;
     if(protocol > 0) // protects against receiving only '!'
     {
         switch(protocol[0])
@@ -67,6 +82,62 @@ void process_protocol(void)
                 turn_off(LED_GREEN);
                 break; 
             }
+            case 'c':
+            {
+                timed_status = ENABLED;
+                timed_duration = 0;
+                timed_count = 0;
+                for(i = 1; i < protocol_length; i++)
+                {
+                    timed_duration += (int)(protocol[i]-'0')*(int)pow(10, (protocol_length-i));
+                }
+                turn_on(LED_YELLOW);
+                t1_periods_2 = 0;
+                break;
+            }
+            case 'd':
+            {
+                timed_status = DISABLED;
+                turn_off(LED_YELLOW);
+                break;
+            }
+            case 'e':
+            {
+                ch_tx = PROTOCOL_BEGIN;
+                uart_send();
+                ch_tx = 'e';
+                uart_send();
+                if(status(LED_YELLOW) == 1)
+                {
+                    ch_tx = '1';
+                }
+                else
+                {
+                    ch_tx = '0';
+                }
+                uart_send();
+                ch_tx = PROTOCOL_END;
+                uart_send();
+                break;
+            }
+            case 'f':
+            {
+                periodic_status = ENABLED;
+                periodic_pulse_width = 0;
+                for(i = 1; i < protocol_length; i++)
+                {
+                    periodic_pulse_width += (int)(protocol[i]-'0')*(int)pow(10, (protocol_length-i));
+                }
+                turn_on(LED_RED);
+                t1_periods_1 = 0;
+                break;
+            }
+            case 'g':
+            {
+                periodic_status = DISABLED;
+                turn_off(LED_RED);
+                break;
+            }
             default:
             {
                 break;
@@ -77,15 +148,38 @@ void process_protocol(void)
 
 void run_app(void)
 {
-    turn_on(15);
-    turn_on(14);
-    
-    ch_tx = 'r';
-    uart_send();
-    
+    timer_init();
     while(1)
     {
-        receive_protocol();
-        process_protocol();
+        if(ch_new == 1)
+        {
+            if(ch_rx == PROTOCOL_BEGIN) //signifies beginning of protocol
+            {
+                receive_protocol();
+                process_protocol();
+            }
+            ch_new = 0;
+        }
+        if(periodic_status == ENABLED)
+        {
+            if(t1_periods_1 >= (ms_1000/periodic_pulse_width))
+            {
+                toggle(LED_RED);
+                t1_periods_1 = 0;
+            }
+        }
+        if(timed_status == ENABLED)
+        {
+            if(t1_periods_2 >= ms_100/6) //62520
+            {
+                timed_count++;
+                if(timed_count >= timed_duration)
+                {
+                    toggle(LED_YELLOW);
+                    timed_status = DISABLED;
+                }
+                t1_periods_2 = 0;
+            }
+        }
     }
 }
