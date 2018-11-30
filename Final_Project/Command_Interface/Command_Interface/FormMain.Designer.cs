@@ -400,6 +400,7 @@
             this.tbInputStatus.Name = "tbInputStatus";
             this.tbInputStatus.Size = new System.Drawing.Size(85, 33);
             this.tbInputStatus.TabIndex = 14;
+            this.tbInputStatus.TextChanged += new System.EventHandler(this.tbInputStatus_TextChanged);
             // 
             // groupBoxAnalog
             // 
@@ -466,6 +467,7 @@
             this.tbStatusAN1.Name = "tbStatusAN1";
             this.tbStatusAN1.Size = new System.Drawing.Size(85, 33);
             this.tbStatusAN1.TabIndex = 19;
+            this.tbStatusAN1.TextChanged += new System.EventHandler(this.tbStatusAN1_TextChanged);
             // 
             // btnCh3
             // 

@@ -148,26 +148,74 @@ namespace CmdInterface
 
         private void ShowText(object sender, EventArgs e) // called after UART data received
         {
-            if(count_rx > 0)
+            if (count_rx > 0)
             {
-                if(mode_rx == 'e')
+                switch (mode_rx)
                 {
-                    if(count_rx > 1)
+                    case 'e':
                     {
-                        if(str_rx == "1")
+                        if (count_rx > 1)
                         {
-                            tbStatus.Text = "ON";
+                            if (str_rx == "1")
+                            {
+                                tbStatus.Text = "ON";
+                            }
+                            else
+                            {
+                                tbStatus.Text = "OFF";
+                            }
                         }
-                        else
+                        break;
+                    }
+                    case 'h':
+                    {
+                        if (count_rx > 1)
                         {
-                            tbStatus.Text = "OFF";
+                            if (str_rx == "1")
+                            {
+                                tbInputStatus.Text = "ON";
+                            }
+                            else
+                            {
+                                tbInputStatus.Text = "OFF";
+                            }
                         }
+                        break;
+                    }
+                    case 'i':
+                    {
+                        if (count_rx > 1)
+                        {
+                            tbStatusAN1.Text = str_rx;
+                        }
+                        break;
+                    }
+                    case 'j':
+                    {
+                        if (count_rx > 1)
+                        {
+                            tbStatusAN2.Text = str_rx;
+                        }
+                        break;
+                    }
+                    case 'k':
+                    {
+                        if (count_rx > 1)
+                        {
+                            tbStatusAN3.Text = str_rx;
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        break;
                     }
                 }
+            }
+                
             //tbStatus.Text = str_rx;
             //tbStatus.AppendText(mode_rx.ToString());
             //tbStatus.AppendText(str_rx);
-            }
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -319,6 +367,16 @@ namespace CmdInterface
         private void btnStatus_Click(object sender, EventArgs e)
         {
             _composer.GenericCmd("<e>");
+        }
+
+        private void tbInputStatus_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbStatusAN1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void btnCh3_Click(object sender, EventArgs e)

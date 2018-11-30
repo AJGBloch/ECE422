@@ -44,5 +44,7 @@ void turn_on(int LED);
 void turn_off(int LED);
 void toggle(int LED);
 int status(int LED);
+int check_digital(void);
+int check_analog(int channel);
 #endif	/* GPIO_H */
 

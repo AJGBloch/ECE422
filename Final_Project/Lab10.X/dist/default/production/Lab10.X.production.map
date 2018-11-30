@@ -127,11 +127,11 @@ xc16-ld 1.35 (A)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x886           0xcc9  (3273)
-.text                        0x986               0x28e           0x3d5  (981)
-.dinit                       0xc14                0x32            0x4b  (75)
-.text                        0xc46                0x34            0x4e  (78)
+.text                        0x986               0x414           0x61e  (1566)
+.dinit                       0xd9a                0x32            0x4b  (75)
+.text                        0xdcc                0x34            0x4e  (78)
 
-                 Total "program" memory used (bytes):         0x1137  (4407) 1%
+                 Total "program" memory used (bytes):         0x1380  (4992) 1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -211,9 +211,9 @@ External Symbols in Program Memory (by address):
                   0x00055e                  ___divsf3
                   0x0005e2                  _expf
                   0x0006a6                  __fchop
+                  0x0006f4                  ___eqsf2
                   0x0006f4                  ___lesf2
                   0x0006f4                  ___ltsf2
-                  0x0006f4                  ___eqsf2
                   0x0006f8                  ___gtsf2
                   0x0006f8                  ___gesf2
                   0x0006fc                  ___floatdisf
@@ -229,16 +229,18 @@ External Symbols in Program Memory (by address):
                   0x000950                  __fcompare
                   0x000986                  _receive_protocol
                   0x0009c6                  _process_protocol
-                  0x000ae0                  _run_app
-                  0x000b48                  _gpio_init
-                  0x000b58                  _turn_on
-                  0x000b6e                  _turn_off
-                  0x000b86                  _toggle
-                  0x000ba4                  _status
-                  0x000bc4                  _uart_init
-                  0x000bfc                  _uart_send
-                  0x000c46                  _timer_init
-                  0x000c6e                  _main
+                  0x000c0e                  _run_app
+                  0x000c76                  _gpio_init
+                  0x000c94                  _turn_on
+                  0x000caa                  _turn_off
+                  0x000cc2                  _toggle
+                  0x000ce0                  _status
+                  0x000d00                  _check_digital
+                  0x000d0e                  _check_analog
+                  0x000d4a                  _uart_init
+                  0x000d82                  _uart_send
+                  0x000dcc                  _timer_init
+                  0x000df4                  _main
                   0x02af00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
@@ -273,22 +275,24 @@ External Symbols in Program Memory (by name):
                   0x0007c6                  __funpack2
                   0x00013c                  __psv_init
                   0x000100                  __resetPRI
+                  0x000d0e                  _check_analog
+                  0x000d00                  _check_digital
                   0x0005e2                  _expf
-                  0x000b48                  _gpio_init
+                  0x000c76                  _gpio_init
                   0x0007f6                  _ldexpf
                   0x00083a                  _logf
-                  0x000c6e                  _main
+                  0x000df4                  _main
                   0x0002c2                  _powf
                   0x0009c6                  _process_protocol
                   0x000986                  _receive_protocol
-                  0x000ae0                  _run_app
-                  0x000ba4                  _status
-                  0x000c46                  _timer_init
-                  0x000b86                  _toggle
-                  0x000b6e                  _turn_off
-                  0x000b58                  _turn_on
-                  0x000bc4                  _uart_init
-                  0x000bfc                  _uart_send
+                  0x000c0e                  _run_app
+                  0x000ce0                  _status
+                  0x000dcc                  _timer_init
+                  0x000cc2                  _toggle
+                  0x000caa                  _turn_off
+                  0x000c94                  _turn_on
+                  0x000d4a                  _uart_init
+                  0x000d82                  _uart_send
 
 Memory Configuration
 
@@ -457,44 +461,45 @@ __FDEVOPT1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1cfa
+.debug_info       0x000000       0x2107
  *(.debug_info)
  .debug_info      0x000000        0x910 build/default/production/timer.o
  .debug_info      0x000910        0x146 build/default/production/main.o
  .debug_info      0x000a56        0xcfb build/default/production/uart.o
- .debug_info      0x001751        0x256 build/default/production/gpio.o
- .debug_info      0x0019a7        0x353 build/default/production/app.o
+ .debug_info      0x001751        0x642 build/default/production/gpio.o
+ .debug_info      0x001d93        0x374 build/default/production/app.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x3d6
+.debug_abbrev     0x000000        0x466
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x12d build/default/production/timer.o
  .debug_abbrev    0x00012d         0x36 build/default/production/main.o
  .debug_abbrev    0x000163        0x11c build/default/production/uart.o
- .debug_abbrev    0x00027f         0xa7 build/default/production/gpio.o
- .debug_abbrev    0x000326         0xb0 build/default/production/app.o
+ .debug_abbrev    0x00027f        0x12a build/default/production/gpio.o
+ .debug_abbrev    0x0003a9         0xbd build/default/production/app.o
 
-.debug_line       0x000000        0x407
+.debug_line       0x000000        0x449
  *(.debug_line)
  .debug_line      0x000000        0x112 build/default/production/timer.o
  .debug_line      0x000112         0x37 build/default/production/main.o
  .debug_line      0x000149        0x113 build/default/production/uart.o
- .debug_line      0x00025c         0xfb build/default/production/gpio.o
- .debug_line      0x000357         0xb0 build/default/production/app.o
+ .debug_line      0x00025c        0x10e build/default/production/gpio.o
+ .debug_line      0x00036a         0xdf build/default/production/app.o
 
-.debug_frame      0x000000        0x202
+.debug_frame      0x000000        0x23a
  *(.debug_frame)
  .debug_frame     0x000000         0x54 build/default/production/timer.o
  .debug_frame     0x000054         0x30 build/default/production/main.o
  .debug_frame     0x000084         0x70 build/default/production/uart.o
- .debug_frame     0x0000f4         0xa0 build/default/production/gpio.o
- .debug_frame     0x000194         0x6e build/default/production/app.o
+ .debug_frame     0x0000f4         0xd8 build/default/production/gpio.o
+ .debug_frame     0x0001cc         0x6e build/default/production/app.o
 
-.debug_str        0x000000        0x10e
+.debug_str        0x000000        0x12d
  *(.debug_str)
  .debug_str       0x000000         0x3f build/default/production/timer.o
  .debug_str       0x00003f         0x4f build/default/production/uart.o
- .debug_str       0x00008e         0x80 build/default/production/app.o
+ .debug_str       0x00008e         0x1f build/default/production/gpio.o
+ .debug_str       0x0000ad         0x80 build/default/production/app.o
 
 .debug_loc
  *(.debug_loc)
@@ -503,7 +508,7 @@ __FDEVOPT1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x21d
+                  0x000000        0x240
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x60 build/default/production/timer.o
@@ -512,9 +517,9 @@ __FDEVOPT1
  .debug_pubnames
                   0x00007b         0x60 build/default/production/uart.o
  .debug_pubnames
-                  0x0000db         0x4f build/default/production/gpio.o
+                  0x0000db         0x72 build/default/production/gpio.o
  .debug_pubnames
-                  0x00012a         0xf3 build/default/production/app.o
+                  0x00014d         0xf3 build/default/production/app.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1870,7 +1875,7 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000078        0x1ed
+                  0x000078        0x22f
  .debug_pubtypes
                   0x000078         0x95 build/default/production/timer.o
  .debug_pubtypes
@@ -1878,68 +1883,68 @@ LOAD data_init
  .debug_pubtypes
                   0x00011f        0x115 build/default/production/uart.o
  .debug_pubtypes
-                  0x000234         0x1f build/default/production/gpio.o
+                  0x000234         0x61 build/default/production/gpio.o
  .debug_pubtypes
-                  0x000253         0x12 build/default/production/app.o
+                  0x000295         0x12 build/default/production/app.o
 
 __c30_signature
-                  0x000265         0xa8
+                  0x0002a7         0xa8
  __c30_signature
-                  0x000265          0x6 build/default/production/timer.o
+                  0x0002a7          0x6 build/default/production/timer.o
  __c30_signature
-                  0x00026b          0x6 build/default/production/main.o
+                  0x0002ad          0x6 build/default/production/main.o
  __c30_signature
-                  0x000271          0x6 build/default/production/uart.o
+                  0x0002b3          0x6 build/default/production/uart.o
  __c30_signature
-                  0x000277          0x6 build/default/production/gpio.o
+                  0x0002b9          0x6 build/default/production/gpio.o
  __c30_signature
-                  0x00027d          0x6 build/default/production/app.o
+                  0x0002bf          0x6 build/default/production/app.o
  __c30_signature
-                  0x000283          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x0002c5          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x000289          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x0002cb          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x00028f          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fixsfsi.daeo)
+                  0x0002d1          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fixsfsi.daeo)
  __c30_signature
-                  0x000295          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(floatsisf.daeo)
+                  0x0002d7          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(floatsisf.daeo)
  __c30_signature
-                  0x00029b          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(funpack.daeo)
+                  0x0002dd          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(funpack.daeo)
  __c30_signature
-                  0x0002a1          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(powf.daeo)
+                  0x0002e3          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(powf.daeo)
  __c30_signature
-                  0x0002a7          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(_frexpf.daeo)
+                  0x0002e9          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(_frexpf.daeo)
  __c30_signature
-                  0x0002ad          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(addsf3.daeo)
+                  0x0002ef          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(addsf3.daeo)
  __c30_signature
-                  0x0002b3          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(divsf3.daeo)
+                  0x0002f5          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(divsf3.daeo)
  __c30_signature
-                  0x0002b9          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(errno.daeo)
+                  0x0002fb          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(errno.daeo)
  __c30_signature
-                  0x0002bf          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(expf.daeo)
+                  0x000301          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(expf.daeo)
  __c30_signature
-                  0x0002c5          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fchop.daeo)
+                  0x000307          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fchop.daeo)
  __c30_signature
-                  0x0002cb          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(feqltle.daeo)
+                  0x00030d          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(feqltle.daeo)
  __c30_signature
-                  0x0002d1          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fgtge.daeo)
+                  0x000313          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fgtge.daeo)
  __c30_signature
-                  0x0002d7          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(floatdisf.daeo)
+                  0x000319          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(floatdisf.daeo)
  __c30_signature
-                  0x0002dd          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(floatundisf.daeo)
+                  0x00031f          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(floatundisf.daeo)
  __c30_signature
-                  0x0002e3          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fpack.daeo)
+                  0x000325          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fpack.daeo)
  __c30_signature
-                  0x0002e9          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(funpack2.daeo)
+                  0x00032b          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(funpack2.daeo)
  __c30_signature
-                  0x0002ef          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(futil.daeo)
+                  0x000331          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(futil.daeo)
  __c30_signature
-                  0x0002f5          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(ldexpf.daeo)
+                  0x000337          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(ldexpf.daeo)
  __c30_signature
-                  0x0002fb          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(logf.daeo)
+                  0x00033d          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(logf.daeo)
  __c30_signature
-                  0x000301          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(mulsf3.daeo)
+                  0x000343          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(mulsf3.daeo)
  __c30_signature
-                  0x000307          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fcompare.daeo)
+                  0x000349          0x6 c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a(fcompare.daeo)
 
 .nbss               0x0800         0x14
  .nbss              0x0800          0xc build/default/production/app.o
@@ -2008,26 +2013,28 @@ __c30_signature
  .ivt._U1RXInterrupt
                   0x00002a          0x2 build/default/production/uart.o
 
-.text             0x000986        0x28e
- .text            0x000986        0x1c2 build/default/production/app.o
+.text             0x000986        0x414
+ .text            0x000986        0x2f0 build/default/production/app.o
                   0x000986                  _receive_protocol
                   0x0009c6                  _process_protocol
-                  0x000ae0                  _run_app
- .text            0x000b48         0x7c build/default/production/gpio.o
-                  0x000b48                  _gpio_init
-                  0x000b58                  _turn_on
-                  0x000b6e                  _turn_off
-                  0x000b86                  _toggle
-                  0x000ba4                  _status
- .text            0x000bc4         0x50 build/default/production/uart.o
-                  0x000bc4                  _uart_init
-                  0x000bfc                  _uart_send
+                  0x000c0e                  _run_app
+ .text            0x000c76         0xd4 build/default/production/gpio.o
+                  0x000c76                  _gpio_init
+                  0x000c94                  _turn_on
+                  0x000caa                  _turn_off
+                  0x000cc2                  _toggle
+                  0x000ce0                  _status
+                  0x000d00                  _check_digital
+                  0x000d0e                  _check_analog
+ .text            0x000d4a         0x50 build/default/production/uart.o
+                  0x000d4a                  _uart_init
+                  0x000d82                  _uart_send
 
-.dinit            0x000c14         0x32
- .dinit           0x000c14         0x32 data_init
+.dinit            0x000d9a         0x32
+ .dinit           0x000d9a         0x32 data_init
 
-.text             0x000c46         0x34
- .text            0x000c46         0x28 build/default/production/timer.o
-                  0x000c46                  _timer_init
- .text            0x000c6e          0xc build/default/production/main.o
-                  0x000c6e                  _main
+.text             0x000dcc         0x34
+ .text            0x000dcc         0x28 build/default/production/timer.o
+                  0x000dcc                  _timer_init
+ .text            0x000df4          0xc build/default/production/main.o
+                  0x000df4                  _main

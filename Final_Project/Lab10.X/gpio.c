@@ -31,7 +31,10 @@
 
 void gpio_init(void)
 {
-   TRISB &= 0x1FFF;              // RP3, 14, 15 are output
+   TRISB &= 0x1FFF;              // RP3, 14, 15 are output, the rest are input
+   TRISA |= 0xFFFF;             // all are input
+   ANSB = 0x1FFF;               //RP13, 14, 15 are digital
+   ANSA = 0xFFFB;               // RA2 is digital
    LATB = 0x0000;                    // initialize output to be off
 }
 
@@ -72,4 +75,29 @@ int status(int LED)
         status = 1;
     }
     return status;
+}
+
+int check_digital(void)
+{
+    return PORTAbits.RA2;
+}
+
+int check_analog(int channel)
+{
+    int i;
+    AD1CON1 = 0x000; // SAMP bit = 0 ends sampling and starts converting
+    AD1CHS = (0x0001 << channel); // connect AN(channel) as S/H+ input
+   
+    AD1CSSL = 0;
+    AD1CON3 = 0x0002; // manual sample, Tad = 3Tcy
+    AD1CON2 = 0;
+    AD1CON1bits.ADON = 1; // turn ADC on
+    AD1CON1bits.SAMP = 1;
+    for(i = 0; i < 100; i++) // delay
+    {
+       ;
+    }
+    AD1CON1bits.SAMP = 0;
+    while(!AD1CON1bits.DONE);
+    return ADC1BUF0;
 }

@@ -67,7 +67,7 @@ void receive_protocol(void)
 
 void process_protocol(void)
 {
-    int i;
+    int i, value;
     if(protocol > 0) // protects against receiving only '!'
     {
         switch(protocol[0])
@@ -138,6 +138,88 @@ void process_protocol(void)
                 turn_off(LED_RED);
                 break;
             }
+            case 'h':
+            {
+                ch_tx = PROTOCOL_BEGIN;
+                uart_send();
+                ch_tx = 'h';
+                uart_send();
+                if(check_digital() == 1)
+                {
+                    ch_tx = '1';
+                }
+                else
+                {
+                    ch_tx = '0';
+                }
+                uart_send();
+                ch_tx = PROTOCOL_END;
+                uart_send();
+                break;
+            }
+            case 'i':
+            {
+                value = check_analog(3);
+                ch_tx = PROTOCOL_BEGIN;
+                uart_send();
+                ch_tx = 'i';
+                uart_send();
+                ch_tx = '~';
+                uart_send();
+                i = 1000;
+                while(i > 0)
+                {
+                    ch_tx = value/i + '0';
+                    uart_send();
+                    value = value % i;
+                    i = i/10;
+                }
+                ch_tx = PROTOCOL_END;
+                uart_send();
+                break;
+            }
+            case 'j':
+            {
+                value = check_analog(4);
+                ch_tx = PROTOCOL_BEGIN;
+                uart_send();
+                ch_tx = 'j';
+                uart_send();
+                ch_tx = '~';
+                uart_send();
+                i = 1000;
+                while(i > 0)
+                {
+                    ch_tx = value/i + '0';
+                    uart_send();
+                    value = value % i;
+                    i = i/10;
+                }
+                ch_tx = PROTOCOL_END;
+                uart_send();
+                break;
+            }
+            case 'k':
+            {
+                value = check_analog(5);
+                ch_tx = PROTOCOL_BEGIN;
+                uart_send();
+                ch_tx = 'k';
+                uart_send();
+                ch_tx = '~';
+                uart_send();
+                i = 1000;
+                while(i > 0)
+                {
+                    ch_tx = value/i + '0';
+                    uart_send();
+                    value = value % i;
+                    i = i/10;
+                }
+                ch_tx = PROTOCOL_END;
+                uart_send();
+                break;
+            }
             default:
             {
                 break;
@@ -148,6 +230,7 @@ void process_protocol(void)
 
 void run_app(void)
 {
+    int temp;
     timer_init();
     while(1)
     {
