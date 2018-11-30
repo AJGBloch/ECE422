@@ -4,13 +4,13 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.35\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.00 \
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.01 \
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.02 \
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.03 \
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.04 \
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.05 \
-  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp000017e4.06 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.00 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.01 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.02 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.03 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.04 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.05 \
+  -TC:\\Users\\Anthony\\AppData\\Local\\Temp\\tmp00003dec.06 \
   -p24FJ256GA702 \
   -o \
   dist/default/debug/Lab10.X.debug.elf \
@@ -136,11 +136,11 @@ xc16-ld 1.35 (A)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x886           0xcc9  (3273)
-.text                        0x986               0x37a           0x537  (1335)
-.dinit                       0xd00                0x32            0x4b  (75)
-.text                        0xd32                0x34            0x4e  (78)
+.text                        0x986               0x41a           0x627  (1575)
+.dinit                       0xda0                0x32            0x4b  (75)
+.text                        0xdd2                0x34            0x4e  (78)
 
-                 Total "program" memory used (bytes):         0x1299  (4761) 1%
+                 Total "program" memory used (bytes):         0x1389  (5001) 1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -246,18 +246,18 @@ External Symbols in Program Memory (by address):
                   0x000950                  __fcompare
                   0x000986                  _receive_protocol
                   0x0009c6                  _process_protocol
-                  0x000b5e                  _run_app
-                  0x000bdc                  _gpio_init
-                  0x000bfa                  _turn_on
-                  0x000c10                  _turn_off
-                  0x000c28                  _toggle
-                  0x000c46                  _status
-                  0x000c66                  _check_digital
-                  0x000c74                  _check_analog
-                  0x000cb0                  _uart_init
-                  0x000ce8                  _uart_send
-                  0x000d32                  _timer_init
-                  0x000d5a                  _main
+                  0x000c0e                  _run_app
+                  0x000c7c                  _gpio_init
+                  0x000c9a                  _turn_on
+                  0x000cb0                  _turn_off
+                  0x000cc8                  _toggle
+                  0x000ce6                  _status
+                  0x000d06                  _check_digital
+                  0x000d14                  _check_analog
+                  0x000d50                  _uart_init
+                  0x000d88                  _uart_send
+                  0x000dd2                  _timer_init
+                  0x000dfa                  _main
                   0x02af00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
@@ -292,24 +292,24 @@ External Symbols in Program Memory (by name):
                   0x0007c6                  __funpack2
                   0x00013c                  __psv_init
                   0x000100                  __resetPRI
-                  0x000c74                  _check_analog
-                  0x000c66                  _check_digital
+                  0x000d14                  _check_analog
+                  0x000d06                  _check_digital
                   0x0005e2                  _expf
-                  0x000bdc                  _gpio_init
+                  0x000c7c                  _gpio_init
                   0x0007f6                  _ldexpf
                   0x00083a                  _logf
-                  0x000d5a                  _main
+                  0x000dfa                  _main
                   0x0002c2                  _powf
                   0x0009c6                  _process_protocol
                   0x000986                  _receive_protocol
-                  0x000b5e                  _run_app
-                  0x000c46                  _status
-                  0x000d32                  _timer_init
-                  0x000c28                  _toggle
-                  0x000c10                  _turn_off
-                  0x000bfa                  _turn_on
-                  0x000cb0                  _uart_init
-                  0x000ce8                  _uart_send
+                  0x000c0e                  _run_app
+                  0x000ce6                  _status
+                  0x000dd2                  _timer_init
+                  0x000cc8                  _toggle
+                  0x000cb0                  _turn_off
+                  0x000c9a                  _turn_on
+                  0x000d50                  _uart_init
+                  0x000d88                  _uart_send
 
 Memory Configuration
 
@@ -532,13 +532,13 @@ __FDEVOPT1
  .debug_abbrev    0x00027f        0x12a build/default/debug/gpio.o
  .debug_abbrev    0x0003a9         0xb0 build/default/debug/app.o
 
-.debug_line       0x000000        0x42b
+.debug_line       0x000000        0x449
  *(.debug_line)
  .debug_line      0x000000        0x112 build/default/debug/timer.o
  .debug_line      0x000112         0x37 build/default/debug/main.o
  .debug_line      0x000149        0x113 build/default/debug/uart.o
- .debug_line      0x00025c        0x10e build/default/debug/gpio.o
- .debug_line      0x00036a         0xc1 build/default/debug/app.o
+ .debug_line      0x00025c        0x110 build/default/debug/gpio.o
+ .debug_line      0x00036c         0xdd build/default/debug/app.o
 
 .debug_frame      0x000000        0x23a
  *(.debug_frame)
@@ -2069,28 +2069,28 @@ __c30_signature
  .ivt._U1RXInterrupt
                   0x00002a          0x2 build/default/debug/uart.o
 
-.text             0x000986        0x37a
- .text            0x000986        0x256 build/default/debug/app.o
+.text             0x000986        0x41a
+ .text            0x000986        0x2f6 build/default/debug/app.o
                   0x000986                  _receive_protocol
                   0x0009c6                  _process_protocol
-                  0x000b5e                  _run_app
- .text            0x000bdc         0xd4 build/default/debug/gpio.o
-                  0x000bdc                  _gpio_init
-                  0x000bfa                  _turn_on
-                  0x000c10                  _turn_off
-                  0x000c28                  _toggle
-                  0x000c46                  _status
-                  0x000c66                  _check_digital
-                  0x000c74                  _check_analog
- .text            0x000cb0         0x50 build/default/debug/uart.o
-                  0x000cb0                  _uart_init
-                  0x000ce8                  _uart_send
+                  0x000c0e                  _run_app
+ .text            0x000c7c         0xd4 build/default/debug/gpio.o
+                  0x000c7c                  _gpio_init
+                  0x000c9a                  _turn_on
+                  0x000cb0                  _turn_off
+                  0x000cc8                  _toggle
+                  0x000ce6                  _status
+                  0x000d06                  _check_digital
+                  0x000d14                  _check_analog
+ .text            0x000d50         0x50 build/default/debug/uart.o
+                  0x000d50                  _uart_init
+                  0x000d88                  _uart_send
 
-.dinit            0x000d00         0x32
- .dinit           0x000d00         0x32 data_init
+.dinit            0x000da0         0x32
+ .dinit           0x000da0         0x32 data_init
 
-.text             0x000d32         0x34
- .text            0x000d32         0x28 build/default/debug/timer.o
-                  0x000d32                  _timer_init
- .text            0x000d5a          0xc build/default/debug/main.o
-                  0x000d5a                  _main
+.text             0x000dd2         0x34
+ .text            0x000dd2         0x28 build/default/debug/timer.o
+                  0x000dd2                  _timer_init
+ .text            0x000dfa          0xc build/default/debug/main.o
+                  0x000dfa                  _main

@@ -264,5 +264,10 @@ void run_app(void)
                 t1_periods_2 = 0;
             }
         }
+        //temp = check_analog(3);
+        //temp = check_analog(4);
+        temp = 0;
+        temp = check_analog(5);
+        temp = 0;
     }
 }
