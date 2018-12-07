@@ -31,11 +31,12 @@
 
 void gpio_init(void)
 {
-   TRISB &= 0x1FFF;              // RP3, 14, 15 are output, the rest are input
-   TRISA |= 0xFFFF;             // all are input
-   ANSB = 0x1FFF;               //RP13, 14, 15 are digital
-   ANSA = 0xFFFB;               // RA2 is digital
    LATB = 0x0000;                    // initialize output to be off
+   TRISB = 0x0FFF;              // RP12, 13, 14, 15 are output, the rest are input
+   TRISA = 0xFFFF;             // all are input
+   ANSB = 0x0FFF;               //RP12, 13, 14, 15 are digital
+   ANSA = 0xFFFB;               // RA2 is digital
+   //LATB = 0x0000;                    // initialize output to be off
 }
 
 
@@ -82,7 +83,7 @@ int check_digital(void)
     return PORTAbits.RA2;
 }
 
-int check_analog(int channel)
+/*int check_analog(int channel)
 {
     int i;
     AD1CON1 = 0x000; // SAMP bit = 0 ends sampling and starts converting
@@ -165,4 +166,4 @@ int check_analog(int channel)
     
     // if the module is configure for manual sampling set the SAMP bit AD1CON1<1> to begin sampling
     */        
-}
+/*}*/

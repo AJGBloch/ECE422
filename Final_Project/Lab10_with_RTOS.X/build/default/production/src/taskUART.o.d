@@ -14,5 +14,7 @@ FreeRTOS/Source/list.h  \
  FreeRTOS/Source/task.h  \
 src/uart.h  \
 src/gpio.h  \
+src/adc.h  \
+ src/global_variables.h  \
 src/taskUART.h  \
  src/../mcc_generated_files/pin_manager.h 

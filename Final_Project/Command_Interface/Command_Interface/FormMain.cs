@@ -18,6 +18,7 @@ namespace CmdInterface
         private string str_rx;
         private int count_rx;
         private char ch_tx;
+        private int ready_to_send_protocol;
 
         public FormMain()
         {
@@ -139,6 +140,14 @@ namespace CmdInterface
                     ch_rx = (char)temp;
                 }
 
+            }
+            else if(ch_rx == '!')
+            {
+                ready_to_send_protocol = 1;
+            }
+            else
+            {
+                ;
             }
             this.Invoke(new EventHandler(ShowText));
 
@@ -268,7 +277,11 @@ namespace CmdInterface
                 if (string.IsNullOrEmpty(tbAscii.Text) == false)
                 {
                     //Write string directly to serial port object
+                    ready_to_send_protocol = 0;
+                    serialPort1.Write("<");
+                    while (ready_to_send_protocol == 0) ;
                     serialPort1.Write(tbAscii.Text);
+                    serialPort1.Write(">");
                 }
             }
         }
@@ -290,12 +303,12 @@ namespace CmdInterface
 
         private void btnLedOff_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<b>");
+            _composer.GenericCmd("b");
         }
 
         private void btnLedOn_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<a>");
+            _composer.GenericCmd("a");
         }
 
         private void btnEnableTimed_Click(object sender, EventArgs e)
@@ -303,7 +316,7 @@ namespace CmdInterface
             int parsedValue;
             if (int.TryParse(textBoxTime1.Text, out parsedValue))
             {
-                _composer.GenericCmd("<c" + textBoxTime1.Text + ">");
+                _composer.GenericCmd("c" + textBoxTime1.Text);
             }
             else
             {
@@ -314,7 +327,7 @@ namespace CmdInterface
 
         private void btnDisableTimed_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<d>");
+            _composer.GenericCmd("d");
         }
 
         private void btnEnablePeriodic_Click(object sender, EventArgs e)
@@ -322,7 +335,7 @@ namespace CmdInterface
             int parsedValue;
             if (int.TryParse(tbPeriodic.Text, out parsedValue))
             {
-                _composer.GenericCmd("<f" + tbPeriodic.Text + ">");
+                _composer.GenericCmd("f" + tbPeriodic.Text);
             }
             else
             {
@@ -332,22 +345,22 @@ namespace CmdInterface
 
         private void btnDisabledPeriodic_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<g>");
+            _composer.GenericCmd("g");
         }
 
         private void btnReadInput_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<h>");
+            _composer.GenericCmd("h");
         }
 
         private void btnCh1_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<i>");
+            _composer.GenericCmd("i");
         }
 
         private void btnCh2_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<j>");
+            _composer.GenericCmd("j");
         }
 
         private void tbStatus_TextChanged(object sender, EventArgs e)
@@ -366,7 +379,7 @@ namespace CmdInterface
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<e>");
+            _composer.GenericCmd("e");
         }
 
         private void tbInputStatus_TextChanged(object sender, EventArgs e)
@@ -381,7 +394,7 @@ namespace CmdInterface
 
         private void btnCh3_Click(object sender, EventArgs e)
         {
-            _composer.GenericCmd("<k>");
+            _composer.GenericCmd("k");
         }
     }
 }

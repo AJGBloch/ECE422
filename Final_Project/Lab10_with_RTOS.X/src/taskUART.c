@@ -5,9 +5,13 @@
 #include "task.h"
 #include "uart.h"
 #include "gpio.h"
+#include "adc.h"
 #include <math.h>
+#include "global_variables.h"
 
 #include "taskUART.h"
+//#include "taskLEDs.h"
+//#include "taskLED.h"
 
 #include "../mcc_generated_files/pin_manager.h"
 
@@ -20,6 +24,9 @@
 #define PROTOCOL_END '>'
 #define ENABLED 1
 #define DISABLED 0
+#define CH_1 0
+#define CH_2 1
+#define CH_3 5
 
 char protocol[MAX_PROTOCOL_LENGTH];
 int protocol_length;
@@ -33,6 +40,8 @@ int led_yellow_status = OFF;
 
 void receive_protocol(void)
 {
+    ch_tx = '!'; // signal gui to send rest of command
+    uart_send();
     ch_new = 0;
     while(ch_new == 0); // wait for first character of protocol
     protocol_length = 0;
@@ -75,7 +84,7 @@ void process_protocol(void)
                 {
                     timed_duration += (int)(protocol[i]-'0')*(int)pow(10, (protocol_length-i));
                 }
-                turn_on(LED_YELLOW);
+                //turn_on(LED_YELLOW);
                 break;
             }
             case 'd':
@@ -111,7 +120,7 @@ void process_protocol(void)
                 {
                     periodic_pulse_width += (int)(protocol[i]-'0')*(int)pow(10, (protocol_length-i));
                 }
-                turn_on(LED_RED);
+                //turn_on(LED_RED);
                 break;
             }
             case 'g':
@@ -141,12 +150,10 @@ void process_protocol(void)
             }
             case 'i':
             {
-                value = check_analog(3);
+                value = check_analog(CH_1);
                 ch_tx = PROTOCOL_BEGIN;
                 uart_send();
                 ch_tx = 'i';
-                uart_send();
-                ch_tx = '~';
                 uart_send();
                 i = 1000;
                 while(i > 0)
@@ -162,12 +169,10 @@ void process_protocol(void)
             }
             case 'j':
             {
-                value = check_analog(4);
+                value = check_analog(CH_2);
                 ch_tx = PROTOCOL_BEGIN;
                 uart_send();
                 ch_tx = 'j';
-                uart_send();
-                ch_tx = '~';
                 uart_send();
                 i = 1000;
                 while(i > 0)
@@ -183,12 +188,10 @@ void process_protocol(void)
             }
             case 'k':
             {
-                value = check_analog(5);
+                value = check_analog(CH_3);
                 ch_tx = PROTOCOL_BEGIN;
                 uart_send();
                 ch_tx = 'k';
-                uart_send();
-                ch_tx = '~';
                 uart_send();
                 i = 1000;
                 while(i > 0)
@@ -241,13 +244,13 @@ static portTASK_FUNCTION(vTaskUART, pvParameters)
 {
     /* Just to stop compiler warnings. */
     (void) pvParameters;
-    uart_init();
+    //uart_init();
     //===========================================
     //Task entrance
     //===========================================
     while(1)
     {
-        if(ch_new == 1)
+        if(protocol_new == 1)
         {
             //toggle(LED_GREEN);
             //ch_tx = ch_rx;
@@ -257,7 +260,7 @@ static portTASK_FUNCTION(vTaskUART, pvParameters)
                 receive_protocol();
                 process_protocol();
             }
-            ch_new = 0;
+            protocol_new = 0;
         }
         //vTaskDelay(500);
         //toggle(LED_YELLOW);

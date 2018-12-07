@@ -33,13 +33,14 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="tasks" projectFiles="true">
         <itemPath>src/app.h</itemPath>
-        <itemPath>src/taskLEDs.h</itemPath>
         <itemPath>src/taskUART.h</itemPath>
+        <itemPath>src/taskLED.h</itemPath>
       </logicalFolder>
       <itemPath>src/FreeRTOSConfig.h</itemPath>
       <itemPath>src/gpio.h</itemPath>
       <itemPath>src/uart.h</itemPath>
-      <itemPath>src/taskLED.h</itemPath>
+      <itemPath>src/global_variables.h</itemPath>
+      <itemPath>src/adc.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -69,7 +70,6 @@
         <itemPath>mcc_generated_files/pin_manager.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="tasks" projectFiles="true">
-        <itemPath>src/taskLEDs.c</itemPath>
         <itemPath>src/taskUART.c</itemPath>
         <itemPath>src/taskLED.c</itemPath>
       </logicalFolder>
@@ -78,6 +78,7 @@
       <itemPath>src/main.c</itemPath>
       <itemPath>src/gpio.c</itemPath>
       <itemPath>src/uart.c</itemPath>
+      <itemPath>src/adc.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

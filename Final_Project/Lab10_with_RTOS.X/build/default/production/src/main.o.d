@@ -16,7 +16,7 @@ FreeRTOS/Source/task.h  \
 src/app.h  \
 src/FreeRTOSConfig.h  \
  src/taskUART.h  \
-src/taskLEDs.h  \
 src/taskLED.h  \
 src/gpio.h  \
-src/uart.h 
+src/uart.h  \
+src/adc.h 

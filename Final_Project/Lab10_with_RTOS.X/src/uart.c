@@ -33,6 +33,7 @@
 char ch_rx;
 char ch_tx;
 int ch_new = 0;
+int protocol_new = 0;
 
 void uart_init(void)
 {
@@ -61,6 +62,10 @@ void __attribute__((interrupt, no_atuo_psv)) _U1RXInterrupt(void)
 {
     ch_rx = U1RXREG; // read data received by UART
     ch_new = 1; // raise flag that new character was received
+    if(ch_rx == '<')
+    {
+        protocol_new = 1;
+    }
     IFS0bits.U1RXIF = 0; // clear interrupt flag
 
 }

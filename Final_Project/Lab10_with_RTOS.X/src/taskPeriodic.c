@@ -13,7 +13,9 @@
 //RTOS tasks include
 #include "app.h"
 #include "taskUART.h"
-#include "taskLEDs.h"
+#include "taskPeriodic.h"
+#include "gpio.h"
+#include "global_variables.h"
 
 
 /*****************************************************************************
@@ -28,9 +30,18 @@ void prvMainCoRoutine(CoRoutineHandle_t xHandle, unsigned portBASE_TYPE uxIndex)
 
     for (;;)
     {
-        crDELAY(xHandle, Time_MillisecondsToTicks(1000));
-
-        taskHeartbeat_Execute();
+        if(periodic_status == DISABLED)
+        {
+            crDELAY(xHandle, Time_MillisecondsToTicks(100));
+        }
+        else
+        {
+            crDELAY(xHandle, Time_MillisecondsToTicks(1000/periodic_pulse_width));
+        }
+        if(periodic_status == ENABLED)
+        {
+            taskPeriodic_Execute();
+        }
     }
 
     /* Co-routines MUST end with a call to crEND. */
@@ -41,20 +52,21 @@ void prvMainCoRoutine(CoRoutineHandle_t xHandle, unsigned portBASE_TYPE uxIndex)
 // Private functions implementation
 // *****************************************************************************
 
-void taskHeartbeat_Init(unsigned portBASE_TYPE uxNumberToCreate)
+void taskPeriodic_init(unsigned portBASE_TYPE uxNumberToCreate)
 {
-    xCoRoutineCreate(prvMainCoRoutine, crf_HEART_BEAT_PRIORITY, crfFLASH_INDEX);
+    xCoRoutineCreate(prvMainCoRoutine, crf_PERIODIC_PRIORITY, crf_PERIODIC_INDEX);
 }
 
 /*
     Process the heartbeat. This is done in the main event loop (as
     opposed to an interrupt) so we can see if the App has locked up.
 */
-void taskHeartbeat_Execute(void)
+void taskPeriodic_Execute(void)
 {
     portENTER_CRITICAL();
     {
-        IO_RB15_Toggle();        //Toggle signal
+        //IO_RB15_Toggle();        //Toggle signal
+        toggle(LED_RED);
     }
     portEXIT_CRITICAL();
 }

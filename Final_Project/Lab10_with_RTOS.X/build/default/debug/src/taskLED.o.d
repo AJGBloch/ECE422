@@ -1,5 +1,5 @@
-build/default/production/src/taskHeartbeat.o:  \
-src/taskHeartbeat.c  \
+build/default/debug/src/taskLED.o:  \
+src/taskLED.c  \
  FreeRTOS/Source/FreeRTOS.h  \
 src/FreeRTOSConfig.h  \
  src/../mcc_generated_files/clock.h  \
@@ -15,5 +15,7 @@ FreeRTOS/Source/task.h  \
  src/../mcc_generated_files/pin_manager.h  \
 src/app.h  \
 src/FreeRTOSConfig.h  \
- src/taskBlinky.h  \
-src/taskHeartbeat.h 
+ src/taskUART.h  \
+src/taskLED.h  \
+src/gpio.h  \
+src/global_variables.h 

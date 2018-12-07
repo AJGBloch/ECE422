@@ -8,11 +8,14 @@ FreeRTOS/Source/projdefs.h  \
 FreeRTOS/Source/deprecated_definitions.h  \
  FreeRTOS/Source/portmacro.h  \
 FreeRTOS/Source/mpu_wrappers.h  \
- FreeRTOS/Source/timers.h  \
-FreeRTOS/Source/task.h  \
+ FreeRTOS/Source/croutine.h  \
 FreeRTOS/Source/list.h  \
- FreeRTOS/Source/task.h  \
-src/uart.h  \
-src/gpio.h  \
+FreeRTOS/Source/task.h  \
+ src/../mcc_generated_files/system.h  \
+ src/../mcc_generated_files/pin_manager.h  \
+src/app.h  \
+src/FreeRTOSConfig.h  \
+ src/taskUART.h  \
 src/taskLED.h  \
- src/../mcc_generated_files/pin_manager.h 
+src/gpio.h  \
+src/global_variables.h 

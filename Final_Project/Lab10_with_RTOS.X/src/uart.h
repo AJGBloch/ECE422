@@ -36,6 +36,7 @@
 extern char ch_rx;
 extern char ch_tx;
 extern int ch_new;
+extern int protocol_new;
 
 void uart_init(void);
 void uart_send(void);

@@ -13,10 +13,11 @@
 //RTOS tasks include
 #include "app.h"
 #include "taskUART.h"
-#include "taskLEDs.h"
+//#include "taskTimed.h"
 #include "taskLED.h"
 #include "gpio.h"
 #include "uart.h"
+#include "adc.h"
 
 /*****************************************************************************
 
@@ -24,7 +25,7 @@
 
  *****************************************************************************/
 /* The number of flash co-routines to create. */
-#define mainNUM_FLASH_COROUTINES   (1)
+#define mainNUM_FLASH_COROUTINES   (3)
 
 
 // *****************************************************************************
@@ -36,7 +37,20 @@ int main( void )
     SYSTEM_Initialize();
     gpio_init();
     uart_init();
+    adc_init();
     
+    /*while(1)
+    {
+        temp2 = 0;
+        temp = check_analog(temp2);
+        temp2 = 0;
+        temp2 = 1;
+        temp = check_analog(temp2);
+        temp2 = 0;
+        temp2 = 5;
+        temp = check_analog(temp2);
+        temp2 = 0;
+    }*/
     //=========================================================================
     //    Board initialization
     //=========================================================================
@@ -50,8 +64,8 @@ int main( void )
     //    Application Task initialization
     //=========================================================================
     taskUART_init();
-    taskHeartbeat_Init(mainNUM_FLASH_COROUTINES);
-    taskLED_init();
+    taskLED_init(mainNUM_FLASH_COROUTINES);
+    //taskPeriodic_init(mainNUM_FLASH_COROUTINES);
 
     //=========================================================================
     //    FreeRTOS scheduler

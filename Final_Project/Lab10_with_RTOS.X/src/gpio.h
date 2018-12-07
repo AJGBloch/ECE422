@@ -38,6 +38,9 @@
 #define LED_GREEN 13
 #define LED_YELLOW 14
 #define LED_RED 15
+#define LED_POWER 12
+#define ENABLED 1
+#define DISABLED 0
 
 void gpio_init(void);
 void turn_on(int LED);
@@ -45,6 +48,6 @@ void turn_off(int LED);
 void toggle(int LED);
 int status(int LED);
 int check_digital(void);
-int check_analog(int channel);
+//int check_analog(int channel);
 #endif	/* GPIO_H */
 
