@@ -22,7 +22,7 @@
 /* 
  * File: adc.h   
  * Author: Anthony Bloch
- * Comments: handles ADC
+ * Comments: handles ADC for PIC24
  * Revision history: 
  */
 
@@ -35,5 +35,6 @@
 
 void adc_init(void);
 int check_analog(int channel);
+
 #endif	/* ADC_H */
 

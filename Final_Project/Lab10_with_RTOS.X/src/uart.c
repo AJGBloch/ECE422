@@ -58,13 +58,13 @@ void uart_send(void)
     U1TXREG = ch_tx;
 }
 
-void __attribute__((interrupt, no_atuo_psv)) _U1RXInterrupt(void)
+void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 {
     ch_rx = U1RXREG; // read data received by UART
     ch_new = 1; // raise flag that new character was received
     if(ch_rx == '<')
     {
-        protocol_new = 1;
+        protocol_new = 1; // raise flag that new protocol is being sent
     }
     IFS0bits.U1RXIF = 0; // clear interrupt flag
 

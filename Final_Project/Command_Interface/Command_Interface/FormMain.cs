@@ -1,4 +1,25 @@
-﻿using System;
+﻿/* 
+ * File: FormMain.cs  
+ * Author: Anthony Bloch
+ * Comments: This is the main for Lab10 for ECE422
+ *           This program runs alongside a program running on the PIC24FJ256GA2017  connected via uart to this gui.
+ *           Protocols are sent from the GUI which are processed and responded to accordingly by the PIC24.
+ *           Functionality includes:
+ *                  constantly blink LED1 with period of 1 second
+ *               prompted by protocol...
+ *                  turn on/off LED2
+ *                  turn on LED3 for a period of time after which it turns off
+ *                      this LED can be disabled while it is on, and its status can also be read
+ *                  enable LED4 such that is blinks on/off at a given frequency
+ *                      this LED can be disabled such that it remains off
+ *                  read a digital input button
+ *                  read 3 analog channel inputs
+ *                  reset capability through push button
+ *          information is sent back to the GUI via uart as needed
+ * 
+ * Revision history: 
+ */
+using System;
 using System.IO.Ports;
 using System.Windows.Forms;
 
@@ -119,13 +140,13 @@ namespace CmdInterface
             int temp;
             temp = serialPort1.ReadByte();
             ch_rx = (char)temp;
-            if(ch_rx == '<')
+            if(ch_rx == '<') // begin protocol character
             {
                 count_rx = 0;
                 str_rx = "";
                 temp = serialPort1.ReadByte();
                 ch_rx = (char)temp;
-                while (ch_rx != '>')
+                while (ch_rx != '>') // keep receiving protocol until end protocol character is received
                 {
                     if(count_rx == 0)
                     {
@@ -141,7 +162,7 @@ namespace CmdInterface
                 }
 
             }
-            else if(ch_rx == '!')
+            else if(ch_rx == '!') // response from PIC24 that it is ready for protocol
             {
                 ready_to_send_protocol = 1;
             }
@@ -161,7 +182,7 @@ namespace CmdInterface
             {
                 switch (mode_rx)
                 {
-                    case 'e':
+                    case 'e': // status of timed output
                     {
                         if (count_rx > 1)
                         {
@@ -176,7 +197,7 @@ namespace CmdInterface
                         }
                         break;
                     }
-                    case 'h':
+                    case 'h': // digital read
                     {
                         if (count_rx > 1)
                         {
@@ -191,7 +212,7 @@ namespace CmdInterface
                         }
                         break;
                     }
-                    case 'i':
+                    case 'i': //read analog channel 1
                     {
                         if (count_rx > 1)
                         {
@@ -199,7 +220,7 @@ namespace CmdInterface
                         }
                         break;
                     }
-                    case 'j':
+                    case 'j': // read analog channel 2
                     {
                         if (count_rx > 1)
                         {
@@ -207,7 +228,7 @@ namespace CmdInterface
                         }
                         break;
                     }
-                    case 'k':
+                    case 'k': // read analog channel 3
                     {
                         if (count_rx > 1)
                         {
@@ -221,10 +242,6 @@ namespace CmdInterface
                     }
                 }
             }
-                
-            //tbStatus.Text = str_rx;
-            //tbStatus.AppendText(mode_rx.ToString());
-            //tbStatus.AppendText(str_rx);
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -278,10 +295,10 @@ namespace CmdInterface
                 {
                     //Write string directly to serial port object
                     ready_to_send_protocol = 0;
-                    serialPort1.Write("<");
-                    while (ready_to_send_protocol == 0) ;
+                    serialPort1.Write("<"); // send begin protocol character
+                    while (ready_to_send_protocol == 0); // wait for acknowledge from PIC24
                     serialPort1.Write(tbAscii.Text);
-                    serialPort1.Write(">");
+                    serialPort1.Write(">"); // send end protocol character
                 }
             }
         }
@@ -369,7 +386,6 @@ namespace CmdInterface
 
         private void tbPeriodic_TextChanged(object sender, EventArgs e)
         {
-            //tbPeriodic.Text;
         }
 
         private void lblSecond_Click(object sender, EventArgs e)

@@ -22,7 +22,7 @@
 /* 
  * File: global_variables.h   
  * Author: Anthony Bloch
- * Comments:
+ * Comments: contains global variables used within the project and across various tasks
  * Revision history: 
  */
 
@@ -35,6 +35,7 @@
 
 extern int periodic_pulse_width;
 extern int periodic_status;
+extern int periodic_count;
 extern int led_red_status;
 extern int timed_status;
 extern int timed_duration;

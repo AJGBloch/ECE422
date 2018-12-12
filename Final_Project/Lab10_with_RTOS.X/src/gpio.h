@@ -22,7 +22,7 @@
 /* 
  * File: gpio.h   
  * Author: Anthony Bloch
- * Comments: handles GPIO for LEDs on RP13, 14, 15
+ * Comments: handles GPIO on PIC24
  * Revision history: 
  */
 
@@ -48,6 +48,6 @@ void turn_off(int LED);
 void toggle(int LED);
 int status(int LED);
 int check_digital(void);
-//int check_analog(int channel);
+
 #endif	/* GPIO_H */
 

@@ -1,4 +1,45 @@
+/* Microchip Technology Inc. and its subsidiaries.  You may use this software 
+ * and any derivatives exclusively with Microchip products. 
+ * 
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS".  NO WARRANTIES, WHETHER 
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED 
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A 
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION 
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION. 
+ *
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS 
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE 
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS 
+ * IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF 
+ * ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE 
+ * TERMS. 
+ */
 
+/* 
+ * File: main.c   
+ * Author: Anthony Bloch
+ * Comments: This is the main for Lab10 for ECE422
+ *           This program runs on the PIC24FJ256GA2017 along with a GUI connected via uart.
+ *           Protocols are sent from the GUI which are processed and responded to accordingly by the PIC24.
+ *           Functionality includes:
+ *                  constantly blink LED1 with period of 1 second
+ *               prompted by protocol...
+ *                  turn on/off LED2
+ *                  turn on LED3 for a period of time after which it turns off
+ *                      this LED can be disabled while it is on, and its status can also be read
+ *                  enable LED4 such that is blinks on/off at a given frequency
+ *                      this LED can be disabled such that it remains off
+ *                  read a digital input button
+ *                  read 3 analog channel inputs
+ *                  reset capability through push button
+ *          information is sent back to the GUI via uart as needed
+ * 
+ * Revision history: 
+ */
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE

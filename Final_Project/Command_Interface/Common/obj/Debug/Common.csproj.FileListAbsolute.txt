@@ -17,7 +17,6 @@ C:\Users\Anthony\Documents\School\ECE422\Projects\final project\Command_Interfac
 C:\Users\Anthony\Documents\School\ECE422\Projects\final project\Command_Interface\Command_Interface\Common\obj\Debug\CmdInterface_common.pdb
 C:\Users\Anthony\Documents\School\ECE422\git\ECE422\Final_Project\Command_Interface\bin\CmdInterface_common.dll
 C:\Users\Anthony\Documents\School\ECE422\git\ECE422\Final_Project\Command_Interface\bin\CmdInterface_common.pdb
-C:\Users\Anthony\Documents\School\ECE422\git\ECE422\Final_Project\Command_Interface\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
 C:\Users\Anthony\Documents\School\ECE422\git\ECE422\Final_Project\Command_Interface\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 C:\Users\Anthony\Documents\School\ECE422\git\ECE422\Final_Project\Command_Interface\Common\obj\Debug\CmdInterface_common.dll
 C:\Users\Anthony\Documents\School\ECE422\git\ECE422\Final_Project\Command_Interface\Common\obj\Debug\CmdInterface_common.pdb

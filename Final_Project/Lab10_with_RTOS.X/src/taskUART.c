@@ -1,3 +1,31 @@
+/* Microchip Technology Inc. and its subsidiaries.  You may use this software 
+ * and any derivatives exclusively with Microchip products. 
+ * 
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS".  NO WARRANTIES, WHETHER 
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED 
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A 
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION 
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION. 
+ *
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS 
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE 
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS 
+ * IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF 
+ * ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE 
+ * TERMS. 
+ */
+
+/* 
+ * File: taskUART.c   
+ * Author: Anthony Bloch
+ * Comments: transceiver task for uart. Receives protocol via uart and processes them accordingly
+ * Revision history: 
+ */
+
 #include <stdlib.h>
 
 #include "FreeRTOS.h"
@@ -10,8 +38,6 @@
 #include "global_variables.h"
 
 #include "taskUART.h"
-//#include "taskLEDs.h"
-//#include "taskLED.h"
 
 #include "../mcc_generated_files/pin_manager.h"
 
@@ -32,6 +58,7 @@ char protocol[MAX_PROTOCOL_LENGTH];
 int protocol_length;
 int periodic_pulse_width = 1;
 int periodic_status = DISABLED;
+int periodic_count = 0;
 int led_red_status = OFF;
 int timed_status = DISABLED;
 int timed_duration = 1;
@@ -65,17 +92,17 @@ void process_protocol(void)
     {
         switch(protocol[0])
         {
-            case 'a':
+            case 'a': // turn on LED
             {
                 turn_on(LED_GREEN);
                 break;
             }
-            case 'b':
+            case 'b': // turn off LED
             {
                 turn_off(LED_GREEN);
                 break; 
             }
-            case 'c':
+            case 'c': // enable timed output
             {
                 timed_status = ENABLED;
                 timed_duration = 0;
@@ -84,16 +111,15 @@ void process_protocol(void)
                 {
                     timed_duration += (int)(protocol[i]-'0')*(int)pow(10, (protocol_length-i));
                 }
-                //turn_on(LED_YELLOW);
                 break;
             }
-            case 'd':
+            case 'd': // disable timed output
             {
                 timed_status = DISABLED;
                 turn_off(LED_YELLOW);
                 break;
             }
-            case 'e':
+            case 'e': // check status of timed output
             {
                 ch_tx = PROTOCOL_BEGIN;
                 uart_send();
@@ -112,24 +138,24 @@ void process_protocol(void)
                 uart_send();
                 break;
             }
-            case 'f':
+            case 'f': // enable periodic output
             {
                 periodic_status = ENABLED;
                 periodic_pulse_width = 0;
+                periodic_count = 0;
                 for(i = 1; i < protocol_length; i++)
                 {
                     periodic_pulse_width += (int)(protocol[i]-'0')*(int)pow(10, (protocol_length-i));
                 }
-                //turn_on(LED_RED);
                 break;
             }
-            case 'g':
+            case 'g': // disable periodic output
             {
                 periodic_status = DISABLED;
                 turn_off(LED_RED);
                 break;
             }
-            case 'h':
+            case 'h': // read digital
             {
                 ch_tx = PROTOCOL_BEGIN;
                 uart_send();
@@ -148,7 +174,7 @@ void process_protocol(void)
                 uart_send();
                 break;
             }
-            case 'i':
+            case 'i': // read adc channel 1
             {
                 value = check_analog(CH_1);
                 ch_tx = PROTOCOL_BEGIN;
@@ -167,7 +193,7 @@ void process_protocol(void)
                 uart_send();
                 break;
             }
-            case 'j':
+            case 'j': // read adc channel 2
             {
                 value = check_analog(CH_2);
                 ch_tx = PROTOCOL_BEGIN;
@@ -186,7 +212,7 @@ void process_protocol(void)
                 uart_send();
                 break;
             }
-            case 'k':
+            case 'k': // read adc channel 3
             {
                 value = check_analog(CH_3);
                 ch_tx = PROTOCOL_BEGIN;
@@ -244,7 +270,6 @@ static portTASK_FUNCTION(vTaskUART, pvParameters)
 {
     /* Just to stop compiler warnings. */
     (void) pvParameters;
-    //uart_init();
     //===========================================
     //Task entrance
     //===========================================
@@ -252,9 +277,6 @@ static portTASK_FUNCTION(vTaskUART, pvParameters)
     {
         if(protocol_new == 1)
         {
-            //toggle(LED_GREEN);
-            //ch_tx = ch_rx;
-            //uart_send();
             if(ch_rx == PROTOCOL_BEGIN) //signifies beginning of protocol
             {
                 receive_protocol();
@@ -262,8 +284,6 @@ static portTASK_FUNCTION(vTaskUART, pvParameters)
             }
             protocol_new = 0;
         }
-        //vTaskDelay(500);
-        //toggle(LED_YELLOW);
         vTaskDelay(1);
     }
 }
