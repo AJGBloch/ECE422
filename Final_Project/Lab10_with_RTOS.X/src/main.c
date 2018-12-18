@@ -38,7 +38,44 @@
  *                  reset capability through push button
  *          information is sent back to the GUI via uart as needed
  * 
- * Revision history: 
+ * Revision history:
+ * version 1.0
+			§ GUI set up to send proper protocols to PIC24
+			§ PIC24 set up to receive protocol
+				? Can process protocols for turning on/off a single LED (green)
+			§ PIC project
+				? Files Added
+					® Main.c
+					® App.h/.c
+					® Gpio.h/.c
+					® Uart.h.c
+			§ GUI
+				? Files added
+                    Template from D2L
+ *version 1.1
+			§ PIC project
+				? Files Added
+					® Timer.h/.c
+				? Added LED pulsed and LED timed output functionality
+				? Added status reporting of LED timed output 
+            Protocols now begin with '<' and end with '>'
+ * version 1.2
+			§ PIC project
+				? Added functionality to read digital input (button) - verified as working
+				? Added functionality to read analog, but it needs more work
+            Full communication between GUI and PIC is functional
+ * Version 1.3 to git
+			§ PIC project
+				? Added files for FreeRTOS tasks
+					® taskUART.h/.c
+					® taskLEDs.h/.c
+            UART doesn't always receive command (perhaps because of delay). May need receive buffer instead of character for uart
+ * version 2.0
+			§ PIC24
+				? Added Adc.h/.c
+                Added 3rd coroutine
+ * version 2.1 
+ *          commented code
  */
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
